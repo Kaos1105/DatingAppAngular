@@ -30,7 +30,6 @@ namespace DatingApp.API.Controllers
             // validate request when using MVC controller
             // if (!ModelState.IsValid)
             //     return BadRequest(ModelState);
-
             userForRegisterDTO.Username = userForRegisterDTO.Username.ToLower();
 
             if (await _repo.UserExists(userForRegisterDTO.Username))
