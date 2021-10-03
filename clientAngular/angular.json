@@ -76,6 +76,9 @@
               "browserTarget": "clientAngular:build:production"
             },
             "development": {
+              "sslKey": "./ssl/server.key",
+              "sslCert": "./ssl/server.crt",
+              "ssl": true,
               "browserTarget": "clientAngular:build:development"
             }
           },
