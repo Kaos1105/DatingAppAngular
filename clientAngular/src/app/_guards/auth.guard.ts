@@ -15,12 +15,12 @@ import { AccountService } from '../_services/account.service';
 })
 export class AuthGuard implements CanActivate {
   constructor(
-    private accountSerivce: AccountService,
+    private accountService: AccountService,
     private toastr: ToastrService
   ) {}
 
   canActivate(): Observable<boolean> {
-    return this.accountSerivce.currentUser$.pipe(
+    return this.accountService.currentUser$.pipe(
       map((user) => {
         if (user) return true;
         this.toastr.error('You do not have permission');
