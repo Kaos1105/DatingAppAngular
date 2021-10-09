@@ -13,14 +13,15 @@ export class AccountService {
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.setUserInLocalStorage();
+  }
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map((resp: User) => {
         const user = resp;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
       })
@@ -31,11 +32,16 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((user) => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
       })
     );
+  }
+
+  setUserInLocalStorage() {
+    this.currentUser$.subscribe((user) => {
+      if (user) localStorage.setItem('user', JSON.stringify(user));
+    });
   }
 
   setCurrentUser(user: User) {
